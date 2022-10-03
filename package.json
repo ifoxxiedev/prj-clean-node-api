@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "ISC",
   "scripts": {
-    "test": "jest",
-    "test:ci": "jest"
+    "test": "jest --watchAll --skip-no-tests",
+    "test:staged": "jest",
+    "postinstall": "husky install"
   },
   "author": "@ifoxxiedev",
   "devDependencies": {
@@ -17,6 +18,13 @@
   "standard": {
     "env": [
       "jest"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "standard --fix",
+      "yarn test:staged",
+      "git add ."
     ]
   }
 }

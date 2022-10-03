@@ -5,6 +5,12 @@ class LoginRouter {
         statusCode: 400
       }
     }
+
+    if (!httpRequest.payload.password) {
+      return {
+        statusCode: 400
+      }
+    }
   }
 }
 
@@ -22,16 +28,16 @@ describe('Login Router', () => {
     expect(httpResponse.statusCode).toBe(400)
   })
 
-  // it('Should return 400 if no password is provided', () => {
-  //   const httpRequest = {
-  //     payload: {
-  //       email: 'any_email'
-  //     }
-  //   }
+  it('Should return 400 if no password is provided', () => {
+    const httpRequest = {
+      payload: {
+        email: 'any_email@mail.com'
+      }
+    }
 
-  //   const loginRouter = new LoginRouter()
-  //   const httpResponse = loginRouter.route(httpRequest)
+    const loginRouter = new LoginRouter()
+    const httpResponse = loginRouter.route(httpRequest)
 
-  //   expect(httpResponse.statusCode).toBe(400)
-  // })
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
