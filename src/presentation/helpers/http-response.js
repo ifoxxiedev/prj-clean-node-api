@@ -12,4 +12,8 @@ export class HttpResponse {
   static unauthorized () {
     return { statusCode: 401, result: new UnauthorizedError() }
   }
+
+  static ok (result) {
+    return { statusCode: 200, result }
+  }
 }

@@ -60,7 +60,7 @@ describe('Login Router', () => {
     expect(httpResponse.statusCode).toBe(500)
   })
 
-  it.only('Should call AuthUseCase with correct params', () => {
+  it('Should call AuthUseCase with correct params', () => {
     const { loginRouter, authUseCaseSpy } = makeSut()
 
     const httpRequest = {
@@ -78,7 +78,38 @@ describe('Login Router', () => {
     expect(authUseCaseSpy.password).toBe(httpRequest.payload.password)
   })
 
-  it.only('Should return 401 when invalid credentials is provided', () => {
+  it('Should return 500 if AuthUseCase is not provided', () => {
+    const loginRouter = new LoginRouter()
+
+    const httpRequest = {
+      payload: {
+        email: 'any_email@mail.com',
+        password: 'any_password'
+      }
+    }
+    const httpResponse = loginRouter.route(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+  })
+
+  it('Should return 500 if AuthUseCase withoud method is provided', () => {
+    class AuthUseCaseSpy {}
+
+    const authUseCaseSpy = new AuthUseCaseSpy()
+    const loginRouter = new LoginRouter(authUseCaseSpy)
+
+    const httpRequest = {
+      payload: {
+        email: 'any_email@mail.com',
+        password: 'any_password'
+      }
+    }
+    const httpResponse = loginRouter.route(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(500)
+  })
+
+  it('Should return 401 when invalid credentials is provided', () => {
     const { loginRouter } = makeSut()
 
     const httpRequest = {
@@ -94,5 +125,23 @@ describe('Login Router', () => {
 
     expect(httpResponse.statusCode).toBe(401)
     expect(httpResponse.result).toStrictEqual(new UnauthorizedError())
+  })
+
+  it('Should return 200 when valid credentials are provided', () => {
+    const { loginRouter } = makeSut()
+
+    const httpRequest = {
+      payload: {
+        email: 'valid_email@mail.com',
+        password: 'valid_password'
+      }
+    }
+
+    //  SpyOn
+    jest.spyOn(loginRouter, 'route').mockImplementation(() => HttpResponse.ok())
+
+    const httpResponse = loginRouter.route(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(200)
   })
 })
