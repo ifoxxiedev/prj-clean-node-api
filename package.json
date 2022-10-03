@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "ISC",
   "scripts": {
-    "test": "echo -n \"testing...\""
+    "test": "jest"
   },
   "author": "@ifoxxiedev",
   "devDependencies": {
     "husky": "^8.0.1",
+    "jest": "^29.1.2",
     "lint-staged": "^13.0.3",
     "standard": "^17.0.0"
   },
@@ -20,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx lint-staged && echo \"Hello World\""
+      "pre-commit": "npx lint-staged"
     }
   }
 }
