@@ -1,0 +1,1 @@
+# Starter project template using clean architecture

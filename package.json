@@ -1,0 +1,17 @@
+{
+  "name": "prj-clean-node-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo -n \"testing...\""
+  },
+  "author": "@ifoxxiedev",
+  "devDependencies": {
+    "lint-staged": "^13.0.3",
+    "standard": "^17.0.0"
+  },
+  "lint-staged": {
+    "*.js": ["standard"]
+  }
+}
