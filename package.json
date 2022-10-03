@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "ISC",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "jest"
   },
   "author": "@ifoxxiedev",
   "devDependencies": {
