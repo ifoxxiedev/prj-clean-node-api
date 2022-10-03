@@ -4,5 +4,8 @@ module.exports = {
   collectCoverage: false,
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
-  coverageProvider: 'v8'
+  coverageProvider: 'v8',
+  transform: {
+    '\\.(js|jsx|ts|tsx)$': '@sucrase/jest-plugin'
+  }
 }
