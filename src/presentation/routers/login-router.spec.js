@@ -1,13 +1,15 @@
 import { MissingParamError } from '../errors/missing-param-error'
+import { UnauthorizedError } from '../errors/unauthorized-error'
+import { HttpResponse } from '../helpers/http-response'
 import { LoginRouter } from './login-router'
-class AuthUseCaseSpy {
-  auth (email, password) {
-    this.email = email
-    this.password = password
-  }
-}
 
 const makeSut = () => {
+  class AuthUseCaseSpy {
+    auth (email, password) {
+      this.email = email
+      this.password = password
+    }
+  }
   const authUseCaseSpy = new AuthUseCaseSpy()
   const loginRouter = new LoginRouter(authUseCaseSpy)
 
@@ -74,5 +76,23 @@ describe('Login Router', () => {
 
     expect(authUseCaseSpy.email).toBe(httpRequest.payload.email)
     expect(authUseCaseSpy.password).toBe(httpRequest.payload.password)
+  })
+
+  it.only('Should return 401 when invalid credentials is provided', () => {
+    const { loginRouter } = makeSut()
+
+    const httpRequest = {
+      payload: {
+        email: 'invalid_email@mail.com',
+        password: 'invalid_password'
+      }
+    }
+
+    //  SpyOn
+    jest.spyOn(loginRouter, 'route').mockImplementation(() => HttpResponse.unauthorized())
+    const httpResponse = loginRouter.route(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(401)
+    expect(httpResponse.result).toStrictEqual(new UnauthorizedError())
   })
 })
