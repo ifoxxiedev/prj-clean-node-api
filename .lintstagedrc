@@ -2,6 +2,6 @@
   "*.js": [
     "standard --fix",
     "yarn test:ci",
-    "git add"
+    "git add ."
   ]
 }
