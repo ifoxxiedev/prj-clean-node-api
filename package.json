@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "ISC",
   "scripts": {
-    "test": "jest --watchAll --skip-no-tests",
+    "test": "jest --watchAll --passWithNoTests",
     "test:staged": "jest",
     "postinstall": "husky install"
   },
